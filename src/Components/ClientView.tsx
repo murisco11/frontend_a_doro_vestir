@@ -15,6 +15,7 @@ const ClientView = () => {
     const [address, setAddress] = useState("")
     const [birthday, setBirthday] = useState("")
     const [cpf, setCpf] = useState(0)
+    const [identity, setIdentity] = useState("")
     const [balance, setBalance] = useState(0)
     const [telephone, setTelephone] = useState(0)
     const [status, setStatus] = useState(true)
@@ -27,6 +28,7 @@ const ClientView = () => {
             setAddress(client.address)
             setBirthday(formatDateString(client.birthday))
             setCpf(client.cpf)
+            setIdentity(client.identity)
             setBalance(client.balance)
             setTelephone(client.telephone)
             setStatus(client.status)
@@ -57,6 +59,11 @@ const ClientView = () => {
                     <Box>
                         <Text fontWeight="bold">CPF:</Text>
                         <Text>{cpf}</Text>
+                    </Box>
+
+                    <Box>
+                        <Text fontWeight="bold">Identidade:</Text>
+                        <Text>{identity}</Text>
                     </Box>
 
                     <Box>

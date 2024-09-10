@@ -3,6 +3,7 @@ export interface ClientModelInPost {
     address: string
     birthday: string | Date
     cpf: number
+    identity: string
     balance: number
     telephone: number
     status: boolean

@@ -10,6 +10,7 @@ const ClientPost = () => {
     const [address, setAddress] = useState<string>("")
     const [birthday, setBirthday] = useState<string>(new Date().toISOString().split('T')[0])
     const [cpf, setCpf] = useState<number | string>("")
+    const [identity, setIdentity] = useState<string>("")
     const [balance, setBalance] = useState<number | string>("")
     const [telephone, setTelephone] = useState<number | string>("")
     const [status, setStatus] = useState<boolean>(false)
@@ -25,6 +26,7 @@ const ClientPost = () => {
             address,
             birthday: new Date(birthday),
             cpf: Number(cpf),
+            identity,
             balance: Number(balance),
             telephone: Number(telephone),
             status
@@ -84,6 +86,16 @@ const ClientPost = () => {
                             placeholder="CPF"
                             value={cpf}
                             onChange={(e) => setCpf(e.target.value)}
+                        />
+                    </FormControl>
+
+                    <FormControl id="identity">
+                        <FormLabel>Identidade</FormLabel>
+                        <Input
+                            type="text"
+                            placeholder="Identidade"
+                            value={identity}
+                            onChange={(e) => setIdentity(e.target.value)}
                         />
                     </FormControl>
 

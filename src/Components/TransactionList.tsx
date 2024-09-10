@@ -19,7 +19,8 @@ const TransactionPost = (body: any) => {
     }
 
     const handleSubmit = async () => {
-        const numericValue = Number(value)
+        let numericValue = Number(value)
+        numericValue = numericValue * -1
 
         if (!day || !description || isNaN(numericValue)) {
             alert("Complete todos os dados corretamente!")
@@ -36,6 +37,7 @@ const TransactionPost = (body: any) => {
         try {
             const response = await axios.post(`${BACKEND}/transactions`, newTransaction)
             alert(response.data.message)
+            window.location.reload()
         } catch (error) {
             // console.log(error)
         }

@@ -13,6 +13,7 @@ const ClientEdit = () => {
     const [address, setAddress] = useState("")
     const [birthday, setBirthday] = useState<string>(new Date().toISOString().split('T')[0])
     const [cpf, setCpf] = useState(0)
+    const [identity, setIdentity] = useState("")
     const [balance, setBalance] = useState(0)
     const [telephone, setTelephone] = useState(0)
     const [status, setStatus] = useState(true)
@@ -26,6 +27,7 @@ const ClientEdit = () => {
             setAddress(data.address)
             setBirthday(String(data.birthday))
             setCpf(data.cpf)
+            setIdentity(data.identity)
             setBalance(data.balance)
             setTelephone(data.telephone)
             setStatus(data.status)
@@ -47,12 +49,13 @@ const ClientEdit = () => {
                 address,
                 birthday,
                 cpf,
+                identity,
                 balance,
                 telephone,
                 status
             }
 
-            await axios.put(`${process.env.BACKEND}/clients/${id}`, updatedClient)
+            await axios.put(`${BACKEND}/clients/${id}`, updatedClient)
             alert('Cliente atualizado!')
         } catch (error) {
             // console.log(error)
@@ -92,6 +95,15 @@ const ClientEdit = () => {
                                 type="number"
                                 value={cpf}
                                 onChange={(e) => setCpf(Number(e.target.value))}
+                            />
+                        </FormControl>
+
+                        <FormControl id="identity">
+                            <FormLabel>Identidade:</FormLabel>
+                            <Input
+                                type="text"
+                                value={identity}
+                                onChange={(e) => setIdentity(e.target.value)}
                             />
                         </FormControl>
 
