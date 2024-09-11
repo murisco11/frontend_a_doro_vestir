@@ -5,8 +5,10 @@ import ClientItem from "./ClientItem.tsx"
 import { ClientModelInGet } from "../../models/ClientModelInGet"
 import Birthday from "./Birthday.tsx"
 import { Box, Button, Heading, Stack, ChakraProvider } from "@chakra-ui/react"
+import useAuth from "../utils/pin.tsx"
 
 const ClientList = () => {
+    useAuth()
     const BACKEND = process.env.REACT_APP_BACKEND
     const navigate = useNavigate()
     

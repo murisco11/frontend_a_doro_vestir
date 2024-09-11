@@ -4,8 +4,10 @@ import axios from "axios"
 import { ClientModelInPost } from "../../models/ClientModelInPost"
 import { Box, Button, FormControl, FormLabel, Input, Select, Stack, Heading, ChakraProvider } from "@chakra-ui/react"
 import HomeScreen from "./HomeScreen"
+import useAuth from "../utils/pin"
 
 const ClientEdit = () => {
+    useAuth()
     const BACKEND = process.env.REACT_APP_BACKEND
     const { id } = useParams()
 

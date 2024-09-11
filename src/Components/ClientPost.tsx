@@ -3,8 +3,10 @@ import React, { useState } from "react"
 import { ClientModelInPost } from "../../models/ClientModelInPost"
 import { ChakraProvider, Box, Button, FormControl, FormLabel, Input, Stack, Switch, Heading } from "@chakra-ui/react"
 import HomeScreen from "./HomeScreen"
+import useAuth from "../utils/pin"
 
 const ClientPost = () => {
+    useAuth()
     const BACKEND = process.env.REACT_APP_BACKEND
     
     const [name, setName] = useState<string>("")

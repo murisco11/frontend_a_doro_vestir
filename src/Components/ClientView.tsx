@@ -7,8 +7,10 @@ import TransactionsGet from "./TransactionsGet.tsx";
 import formatDateString from "../utils/formatDay.ts";
 import { Box, Text, Stack, Heading, Badge, ChakraProvider } from "@chakra-ui/react"
 import HomeScreen from "./HomeScreen.tsx";
+import useAuth from "../utils/pin.tsx";
 
 const ClientView = () => {
+    useAuth()
     const BACKEND = process.env.REACT_APP_BACKEND
     const { id } = useParams()
     
