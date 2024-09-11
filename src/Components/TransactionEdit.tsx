@@ -15,7 +15,6 @@ const TransactionEdit = () => {
     const [client, setClient] = useState<string>("")
     const [day, setDay] = useState<string>("")
 
-    // Função para buscar os dados da transação pelo ID
     const getTransaction = async () => {
         try {
             const response = await axios.get(`${BACKEND}/transactions/data/${id}`)
@@ -24,13 +23,12 @@ const TransactionEdit = () => {
             setDescription(data.description)
             setValue(data.value)
             setClient(data.client)
-            setDay(data.day.split("T")[0]) // Pegando apenas a data no formato YYYY-MM-DD
+            setDay(data.day.split("T")[0]) 
         } catch (error) {
             console.error("Erro ao carregar transação", error)
         }
     }
 
-    // Função para atualizar os dados da transação
     const updateTransaction = async () => {
         try {
             const updatedTransaction = {
@@ -47,7 +45,6 @@ const TransactionEdit = () => {
         }
     }
 
-    // Carrega os dados da transação quando o ID é definido
     useEffect(() => {
         if (id) {
             getTransaction()
