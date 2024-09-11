@@ -8,7 +8,8 @@ import HomeScreen from "./HomeScreen"
 const ClientEdit = () => {
     const BACKEND = process.env.REACT_APP_BACKEND
     const { id } = useParams()
-    const [client, setClient] = useState<ClientModelInPost | null>(null)
+
+    const [client,   setClient] = useState<ClientModelInPost | null>(null)
     const [name, setName] = useState("")
     const [address, setAddress] = useState("")
     const [birthday, setBirthday] = useState<string>(new Date().toISOString().split('T')[0])
@@ -22,6 +23,7 @@ const ClientEdit = () => {
         try {
             const response = await axios.get<ClientModelInPost[]>(`${BACKEND}/clients/${id}`)
             const data = response.data[0]
+            
             setClient(data)
             setName(data.name)
             setAddress(data.address)

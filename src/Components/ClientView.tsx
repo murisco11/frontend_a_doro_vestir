@@ -11,6 +11,7 @@ import HomeScreen from "./HomeScreen.tsx";
 const ClientView = () => {
     const BACKEND = process.env.REACT_APP_BACKEND
     const { id } = useParams()
+    
     const [name, setName] = useState("")
     const [address, setAddress] = useState("")
     const [birthday, setBirthday] = useState("")

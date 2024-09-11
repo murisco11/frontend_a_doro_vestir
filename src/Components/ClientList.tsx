@@ -8,16 +8,15 @@ import { Box, Button, Heading, Stack, ChakraProvider } from "@chakra-ui/react"
 
 const ClientList = () => {
     const BACKEND = process.env.REACT_APP_BACKEND
-    console.log(BACKEND)
-
     const navigate = useNavigate()
+    
     const [clients, setClients] = useState<ClientModelInGet[] | null>(null)
 
     const list = async () => {
         try {
             const response = await axios.get<ClientModelInGet[]>(`${BACKEND}/clients`)
-            // console.log(response.data)
             const sortedClients = response.data.sort((a, b) => a.name.localeCompare(b.name))
+            
             setClients(sortedClients)
         } catch (error) {
             // console.log(error)
@@ -26,7 +25,7 @@ const ClientList = () => {
 
     useEffect(() => {
         list()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     if (!clients) {

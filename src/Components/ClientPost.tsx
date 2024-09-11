@@ -6,6 +6,7 @@ import HomeScreen from "./HomeScreen"
 
 const ClientPost = () => {
     const BACKEND = process.env.REACT_APP_BACKEND
+    
     const [name, setName] = useState<string>("")
     const [address, setAddress] = useState<string>("")
     const [birthday, setBirthday] = useState<string>(new Date().toISOString().split('T')[0])
@@ -44,11 +45,10 @@ const ClientPost = () => {
         <ChakraProvider>
 
             <Box m={10} p="6" maxW="500px" mx="auto" boxShadow="lg" borderRadius="md">
-            <HomeScreen />
+                <HomeScreen />
                 <Heading as="h2" size="lg" mb="6" textAlign="center">
                     Novo Cliente
                 </Heading>
-
                 <Stack spacing={4}>
                     <FormControl id="name">
                         <FormLabel>Nome</FormLabel>

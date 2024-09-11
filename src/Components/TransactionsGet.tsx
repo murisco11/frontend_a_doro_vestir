@@ -20,7 +20,7 @@ const TransactionsGet = (body: any) => {
     const getTransaction = async () => {
         try {
             const response = await axios.get(`${BACKEND}/transactions/client/${id}`)
-            setTransactions(response.data)
+            setTransactions(response.data.reverse())
         } catch (error) {
             // console.log(error)
         }
