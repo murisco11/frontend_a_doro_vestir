@@ -5,6 +5,7 @@ import ClientPost from './Components/ClientPost'
 import ClientEdit from './Components/ClientEdit'
 import ClientView from './Components/ClientView'
 import Pin from './Components/Pin'
+import TransactionEdit from './Components/TransactionEdit'
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path='/post' element={<ClientPost />} />
         <Route path='/edit/:id' element={<ClientEdit />} />
         <Route path='/view/:id' element={<ClientView />} />
+        <Route path='/transaction/edit/:id' element={<TransactionEdit />} />
       </Routes>
     </Router>
   )

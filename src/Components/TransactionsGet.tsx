@@ -1,8 +1,9 @@
 import axios from "axios"
 import React, {  useEffect, useState } from "react"
 import formatDate from "../utils/formatDate.ts";
-import { Box, Heading, Text, Stack, Divider, ChakraProvider } from "@chakra-ui/react"
+import { Box, Heading, Text, Stack, Divider, ChakraProvider, Button } from "@chakra-ui/react"
 import formatDateString from "../utils/formatDay.ts";
+import { useNavigate } from "react-router-dom";
 
 interface Transaction {
     _id: string;
@@ -14,6 +15,7 @@ interface Transaction {
 
 const TransactionsGet = (body: any) => {
     const BACKEND = process.env.REACT_APP_BACKEND
+    const navigate = useNavigate()
     const id = body.id
     const [transactions, setTransactions] = useState<Transaction[]>([])
 
@@ -33,6 +35,15 @@ const TransactionsGet = (body: any) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [id])
 
+    const handleEdit = async (id: string) => {
+        navigate(`/transaction/edit/${id}`)
+    }
+
+    const handleDelete = async (id: string) => {
+        const response = await axios.delete(`${BACKEND}/transactions/${id}`)
+        alert(response.data.message)
+        window.location.reload()
+    }
 
     return (
         <ChakraProvider>
@@ -49,6 +60,8 @@ const TransactionsGet = (body: any) => {
                         <strong>Valor:</strong> R$ {transaction.value.toFixed(2)}
                     </Text>
                     <Divider />
+                    <Button onClick={() => handleEdit(transaction._id)}>Editar</Button>
+                    <Button onClick= {() => handleDelete(transaction._id)}>Deletar</Button>
                 </Stack>
             ))}
         </Box>
