@@ -99,7 +99,7 @@ const ClientView = () => {
                 </Stack>
 
                 <Box mt="6">
-                    <TransactionPost id={id} />
+                    <TransactionPost id={id}/>
                     <TransactionsGet id={id} />
                 </Box>
             </Box>

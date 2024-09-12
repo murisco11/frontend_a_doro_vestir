@@ -1,32 +1,16 @@
-import React, { useEffect, useState } from "react"
-import { useParams } from "react-router-dom"
+import React, { useState } from "react"
+import { TransactionModelInPost } from "../../models/TransactionModelInPost"
 import axios from "axios"
 import { Box, Button, FormControl, FormLabel, Input, Stack, Heading, ChakraProvider } from "@chakra-ui/react"
-import HomeScreen from "./HomeScreen"
 
-const TransactionEdit = () => {
-    const { id } = useParams()
+const TransactionPost = (body: any) => {
     const BACKEND = process.env.REACT_APP_BACKEND
+    const id = body.id
+    console.log(id)
 
-    const [transaction, setTransaction] = useState<any | null>(null)
+    const [day, setDay] = useState<string>(new Date().toISOString().split('T')[0])
     const [description, setDescription] = useState<string>("")
     const [value, setValue] = useState<string>("")
-    const [client, setClient] = useState<string>("")
-    const [day, setDay] = useState<string>("")
-
-    const getTransaction = async () => {
-        try {
-            const response = await axios.get(`${BACKEND}/transactions/data/${id}`)
-            const data = response.data
-            setTransaction(data)
-            setDescription(data.description)
-            setValue(String(data.value))
-            setClient(data.client)
-            setDay(data.day.split("T")[0]) 
-        } catch (error) {
-            console.error("Erro ao carregar transação", error)
-        }
-    }
 
     const handleValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const inputValue = e.target.value
@@ -35,82 +19,75 @@ const TransactionEdit = () => {
         }
     }
 
-    const updateTransaction = async () => {
+    const handleSubmit = async () => {
+        let numericValue = Number(value)
+        numericValue = numericValue * -1
+
+        if (!day || !description || isNaN(numericValue)) {
+            alert("Complete todos os dados corretamente!")
+            return
+        }
+
+        const newTransaction: TransactionModelInPost = {
+            day: new Date(day),
+            description,
+            value: numericValue,
+            client: id
+        }
+
         try {
-            let numericValue = Number(value)
-            if (isNaN(numericValue)) {
-                alert("Valor inválido!")
-                return
-            }
-
-            const updatedTransaction = {
-                description,
-                value: numericValue,
-                client,
-                day
-            }
-
-            await axios.put(`${BACKEND}/transactions/${id}`, updatedTransaction)
-            alert("Transação atualizada com sucesso!")
+            const response = await axios.post(`${BACKEND}/transactions`, newTransaction)
+            alert(response.data.message)
+            window.location.reload()
         } catch (error) {
-            // console.error("Erro ao atualizar transação", error)
+            // console.log(error)
         }
     }
 
-    useEffect(() => {
-        if (id) {
-            getTransaction()
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [id])
-
     return (
         <ChakraProvider>
-            {transaction ? (
-                <Box m={10} maxW="600px" mx="auto" p="6" boxShadow="lg" borderRadius="md">
-                    <HomeScreen />
-                    <Heading textAlign="center" as="h1" size="xl" mb="6">
-                        Editar Transação
-                    </Heading>
+        <Box maxW="500px" mx="auto" p="6" boxShadow="lg" borderRadius="md">
+            <Heading as="h1" size="lg" mb="6" textAlign="center">
+                Nova Transação
+            </Heading>  
 
-                    <Stack spacing={5}>
-                        <FormControl id="description">
-                            <FormLabel>Descrição:</FormLabel>
-                            <Input
-                                type="text"
-                                value={description}
-                                onChange={(e) => setDescription(e.target.value)}
-                            />
-                        </FormControl>
+            <Stack spacing={4}>
+                <FormControl id="description">
+                    <FormLabel>Descrição:</FormLabel>
+                    <Input
+                        type="text"
+                        placeholder="Descrição"
+                        value={description}
+                        onChange={(e) => setDescription(e.target.value)}
+                    />
+                </FormControl>
 
-                        <FormControl id="value">
-                            <FormLabel>Valor:</FormLabel>
-                            <Input
-                                type="text"
-                                value={value}
-                                onChange={handleValueChange}
-                            />
-                        </FormControl>
+                <FormControl id="day">
+                    <FormLabel>Dia:</FormLabel>
+                    <Input
+                        type="date"
+                        value={day}
+                        onChange={(e) => setDay(e.target.value)}
+                    />
+                </FormControl>
 
-                        <FormControl id="day">
-                            <FormLabel>Data:</FormLabel>
-                            <Input
-                                type="date"
-                                value={day}
-                                onChange={(e) => setDay(e.target.value)}
-                            />
-                        </FormControl>
+                <FormControl id="value">
+                    <FormLabel>Valor:</FormLabel>
+                    <Input
+                        type="text"
+                        placeholder="Valor"
+                        value={value}
+                        onChange={handleValueChange}
+                    />
+                </FormControl>
 
-                        <Button size="lg" onClick={updateTransaction}>
-                            Salvar alterações
-                        </Button>
-                    </Stack>
-                </Box>
-            ) : (
-                <p>Carregando dados da transação...</p>
-            )}
+                <Button onClick={handleSubmit}>
+                    Enviar
+                </Button>
+            </Stack>
+        </Box>
         </ChakraProvider>
     )
 }
 
-export default TransactionEdit
+export default TransactionPost

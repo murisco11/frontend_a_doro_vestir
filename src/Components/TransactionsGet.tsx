@@ -17,14 +17,16 @@ const TransactionsGet = (body: any) => {
     const BACKEND = process.env.REACT_APP_BACKEND
     const navigate = useNavigate()
     const id = body.id
+    console.log(id)
     const [transactions, setTransactions] = useState<Transaction[]>([])
 
     const getTransaction = async () => {
         try {
             const response = await axios.get(`${BACKEND}/transactions/client/${id}`)
+            console.log(response.data)
             setTransactions(response.data.reverse())
         } catch (error) {
-            // console.log(error)
+            console.log(error)
         }
     }
 
