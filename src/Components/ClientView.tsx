@@ -80,8 +80,8 @@ const ClientView = () => {
                     </Box>
 
                     <Box>
-                        <Badge fontSize='lg' colorScheme={balance > 0 ? "green" : "red"}>
-                            {balance > 0 ? 'Bônus' : 'Devendo'}: {balance} R$
+                        <Badge fontSize='lg' colorScheme={balance >= 0 ? "green" : "red"}>
+                            {balance >= 0 ? 'Bônus' : 'Devendo'}: {balance.toFixed(2)} R$
                         </Badge>
                     </Box>
 

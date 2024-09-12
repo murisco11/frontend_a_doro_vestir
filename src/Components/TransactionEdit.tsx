@@ -11,7 +11,7 @@ const TransactionEdit = () => {
     // Definindo os estados para armazenar os dados da transação
     const [transaction, setTransaction] = useState<any | null>(null)
     const [description, setDescription] = useState<string>("")
-    const [value, setValue] = useState<number>(0)
+    const [value, setValue] = useState<string>("")
     const [client, setClient] = useState<string>("")
     const [day, setDay] = useState<string>("")
 
@@ -21,7 +21,7 @@ const TransactionEdit = () => {
             const data = response.data
             setTransaction(data)
             setDescription(data.description)
-            setValue(data.value)
+            setValue(String(data.value * -1))
             setClient(data.client)
             setDay(data.day.split("T")[0]) 
         } catch (error) {
@@ -30,10 +30,15 @@ const TransactionEdit = () => {
     }
 
     const updateTransaction = async () => {
+        if (isNaN(Number(value))) {
+            alert ('O valor não é um número válido, verifique se há PONTO ao invés de vírgua')
+            return
+        }
+
         try {
             const updatedTransaction = {
                 description,
-                value,
+                value: Number(value) * -1,
                 client,
                 day
             }
@@ -74,9 +79,9 @@ const TransactionEdit = () => {
                         <FormControl id="value">
                             <FormLabel>Valor:</FormLabel>
                             <Input
-                                type="number"
+                                type="string"
                                 value={value}
-                                onChange={(e) => setValue(Number(e.target.value))}
+                                onChange={(e) => setValue(e.target.value)}
                             />
                         </FormControl>
 
